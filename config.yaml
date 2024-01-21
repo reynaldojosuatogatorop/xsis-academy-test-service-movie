@@ -30,3 +30,4 @@ server:
     idle: 5
     read: 10
     write: 120
+  url_assets: "/var/www/be-service-customer-assets/"
