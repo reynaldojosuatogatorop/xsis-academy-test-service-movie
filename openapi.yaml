@@ -1,0 +1,270 @@
+openapi: 3.0.0
+info:
+  title: Open API for XSIS Academy Test Service Movie
+  description: Open API for XSIS Academy Test Service Movie
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:8887
+    description: "local development"
+
+paths:
+  /movie:
+    post:
+      summary: Save data movie
+      description: Save data movie
+      tags:
+        - Movie
+      # security:
+      #   - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/MovieRequest'
+      responses:
+        '201':
+          description: Created
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBadRequest'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorUnauthorized'
+    get:
+      summary: Get All Movie List
+      description: Get All Movie List
+      tags:
+        - Movie
+      # security:
+      #   - bearerAuth: []
+      parameters:
+        - name: page
+          in: query
+          description: Page
+          schema:
+            type: integer
+        - name: limit
+          in: query
+          description: Limit
+          schema:
+            type: integer
+        - name: order
+          in: query
+          description: order menggunakan kolom ID sebagai index
+          schema:
+            type: string
+            enum:
+              - asc
+              - desc
+        - name: search
+          in: query
+          description: Search
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Authentication successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseSuccess'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorUnauthorized'
+        '404':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBadRequest'
+  /movie/{id}:
+    patch:
+      summary: Update data movie
+      description: Update data movie
+      tags:
+        - Movie
+      # security:
+      #   - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          description: Search
+          schema:
+            type: integer
+          required: true
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/MovieRequest'
+      responses:
+        '201':
+          description: Updated
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBadRequest'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorUnauthorized'
+    delete:
+      summary: Delete data movie
+      description: Delete data movie
+      tags:
+        - Movie
+      # security:
+      #   - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          description: Search
+          schema:
+            type: integer
+          required: true
+      responses:
+        '200':
+          description: Delete
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBadRequest'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorUnauthorized'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorNotFound'
+    get:
+      summary: Delete data movie
+      description: Delete data movie
+      tags:
+        - Movie
+      # security:
+      #   - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          description: Search
+          schema:
+            type: integer
+          required: true
+      responses:
+        '200':
+          description: Delete
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBadRequest'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorUnauthorized'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorNotFound'
+components:
+  schemas:
+    RequestLogin:
+      type: object
+      properties:
+        email:
+          type: string
+          description: User's email address
+        password:
+          type: string
+          description: User's password
+      required:
+        - email
+        - password
+    ResponseSuccess:
+      type: object
+      properties:
+        user_id:
+          type: string
+          example: 1
+        token:
+          type: string
+          example: "i1u29ijdbabd9qu82i1313axxjq29n"
+        expired:
+          type: string
+          example: "2023-09-10 22:00"
+    ErrorBadRequest:
+      type: object
+      example: Bad request
+    ErrorUnauthorized:
+      type: object
+      example: Unauthorized request
+    ErrorNotFound:
+      type: object
+      example: DATA NOT FOUND
+    ResponseSuccessAuth:
+      type: object
+      properties:
+        user_id:
+          type: string
+          example: 1
+        email:
+          type: string
+          example: "admin@gmail.com"
+        role:
+          type: string
+          example: "pusat"
+        expired:
+          type: string
+          example: 2023-09-10 22:00
+    MovieRequest:
+      type: object
+      properties:
+        title:
+          type: string
+          description: Movie Title
+        description:
+          type: string
+          description: Movie Description
+        rating:
+          type: string
+          description: Movie Rating
+        image:
+          type: string
+          format: binary
+      required:
+        - title
+        - description
+        - rating
+        - image
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer

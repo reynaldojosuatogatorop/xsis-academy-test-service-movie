@@ -1,0 +1,32 @@
+middleware:
+  allows_origin: '*'
+database:
+  database: movie
+#  host: localhost
+  host: "localhost"
+  password: "passwd"
+  path_migrate: file:../db/migration
+  port: "3306"
+  user: root
+redis:
+  host: "localhost"
+  port: "6379"
+  database: 0
+  max_connection: 80
+  password: ""
+  username: ""
+server:
+  base_path: ""
+  body_limit: 4194304
+  case_sensitive: false
+  concurrency: 262144
+  log_level: debug
+  port: "8882"
+  grpc_port: "58882"
+  prefork: false
+  session_expire: 3600
+  strict_routing: false
+  timeout:
+    idle: 5
+    read: 10
+    write: 120

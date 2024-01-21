@@ -1,0 +1,9 @@
+CREATE TABLE movie (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    description TEXT NOT NULL,
+    rating FLOAT NOT NULL,
+    image TEXT NOT NULL,
+    dtm_crt TIMESTAMP NOT NULL DEFAULT NOW(),
+    dtm_upd TIMESTAMP NOT NULL DEFAULT NOW()
+);
